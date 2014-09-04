@@ -1071,6 +1071,11 @@ SQLiteHandler.prototype = {
   },
 
   onSqlError: function(ex, msg, SQLmsg, bAlert) {
+	var startOfMessage
+	if (msg.search(/(.*\n){10,}/) > -1) {
+		// msg is more than 10 lines long
+		msg = /(.*\n?){1,10}/.exec(msg)[0] + '...';
+	}
     msg = "SQLiteManager: " + msg;
     if (SQLmsg != null)
       msg += " [ " + SQLmsg + " ]";
